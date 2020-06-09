@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -45,7 +42,7 @@ public class LoginScene {
         primaryStage.show();
 
     }
-
+    @FXML
     public void onBtnClick(ActionEvent e) {
         String p = new String();
         String userName = loginTF.getText();
@@ -65,6 +62,17 @@ public class LoginScene {
                     if (rs.getString(2).equals(userName) && rs.getString(3).equals(password)) {
 
                         statusLbl.setText("Acces granted");
+                        userID = userName;
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Succesfull log in!");
+                        alert.showAndWait();
+
+                        Stage stage = (Stage) signUpBtn.getScene().getWindow();
+                        stage.close();
+
                         Stage primaryStage = new Stage();
                         Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
                         Scene scene = new Scene(root);
@@ -87,7 +95,7 @@ public class LoginScene {
 
         }
     }
-
+    @FXML
     public void deleteAccountBtn(ActionEvent e) throws IOException {
 
         Stage primaryStage = new Stage();
@@ -98,9 +106,13 @@ public class LoginScene {
 
     }
 
-
+    @FXML
     public void exitBtn(ActionEvent e) {
         System.exit(0);
+    }
+
+    public String getUserID(){
+        return userID;
     }
 
 }
