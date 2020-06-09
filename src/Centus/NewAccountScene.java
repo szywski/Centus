@@ -3,11 +3,11 @@ package Centus;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+
 import java.sql.*;
+
 
 public class NewAccountScene {
 
@@ -62,9 +62,18 @@ public class NewAccountScene {
                         st.executeUpdate("INSERT INTO users VALUES(" + lastInt + ",'"
                                 + loginValue + "','" + passValue + "' )");
                         statusL.setText("User added succefully");
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Succesfully added user!");
+                        alert.showAndWait();
+
+                        Stage stage = (Stage) addBtn.getScene().getWindow();
+                        stage.close();
+
                     } catch (SQLException sqlE) {
                         sqlE.printStackTrace();
-                        statusL.setText("Cannot add user due to database malfunction");
+                        statusL.setText("Cannot add user due to database malfunction\nTry again");
 
                     }
                 }
@@ -73,11 +82,17 @@ public class NewAccountScene {
                 connection.close();
             } catch (ClassNotFoundException | SQLException classNotFoundException) {
                 classNotFoundException.printStackTrace();
-
+                statusL.setText("Cannot add user due to database malfunction");
 
             }
 
         }
+
+    }
+    public void exitNewAccountWindow(ActionEvent e){
+
+        Stage stage = (Stage) exitBtn.getScene().getWindow();
+        stage.close();
 
     }
 }

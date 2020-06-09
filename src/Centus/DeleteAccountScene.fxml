@@ -7,7 +7,7 @@
    <children>
       <PasswordField fx:id="passwordL" layoutX="125.0" layoutY="97.0" promptText="Password" />
       <Button fx:id="deleteAccountBtn" layoutX="151.0" layoutY="172.0" mnemonicParsing="false" onAction="#deleteAccount" text="Delete account" />
-      <Button fx:id="exitBtn" layoutX="335.0" layoutY="224.0" mnemonicParsing="false" text="Exit" />
+      <Button fx:id="exitBtn" layoutX="335.0" layoutY="224.0" mnemonicParsing="false" onAction="#exitDeleteAccountWindow" text="Exit" />
       <TextField fx:id="loginL" layoutX="125.0" layoutY="44.0" promptText="Login" />
       <Label fx:id="statusL" layoutX="89.0" layoutY="137.0" prefHeight="18.0" prefWidth="237.0" />
    </children>

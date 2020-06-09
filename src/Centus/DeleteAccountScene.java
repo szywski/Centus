@@ -2,10 +2,8 @@ package Centus;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.sql.*;
 
@@ -52,6 +50,15 @@ public class DeleteAccountScene {
                     try{
                     st.executeUpdate("DELETE FROM users WHERE userName = '"+loginValue+"'");
                     statusL.setText("Account deleted");
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Succesfully deleted user!");
+                        alert.showAndWait();
+
+                        Stage stage = (Stage) deleteAccountBtn.getScene().getWindow();
+                        stage.close();
+
                 }catch (SQLException sqlE ){
                         sqlE.printStackTrace();
                     statusL.setText("Cannot delete account due to database malfunction");
@@ -67,6 +74,12 @@ public class DeleteAccountScene {
 
 
         }
+
+    }
+    public void exitDeleteAccountWindow(ActionEvent e){
+
+        Stage stage = (Stage) exitBtn.getScene().getWindow();
+        stage.close();
 
     }
 
