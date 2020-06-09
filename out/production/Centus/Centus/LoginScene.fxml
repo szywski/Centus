@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="loginAnchorPane" prefHeight="260.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Centus.LoginScene">
+   <children>
+      
+      <Button fx:id="SignInBtn" layoutX="326.0" layoutY="71.0" mnemonicParsing="false" onAction="#onBtnClick" text="Sign in" />
+      <Button fx:id="signUpBtn" layoutX="40.0" layoutY="190.0" mnemonicParsing="false" onAction="#onSignUpBtnClick" text="Sign up" />
+      <Button fx:id="deleteAccountBtn" layoutX="40.0" layoutY="224.0" mnemonicParsing="false" onAction="#deleteAccountBtn" text="Delete account" />
+      <Button fx:id="exitBtn" layoutX="335.0" layoutY="224.0" mnemonicParsing="false" onAction="#exitBtn" text="Exit" />
+      <TextField fx:id="loginTF" layoutX="125.0" layoutY="44.0" onAction="#onBtnClick" prefHeight="26.0" prefWidth="149.0" promptText="Login" />
+      <PasswordField fx:id="passwordPF" layoutX="125.0" layoutY="97.0" onAction="#onBtnClick" promptText="Password" />
+      <Label fx:id="statusLbl" layoutX="78.0" layoutY="140.0" prefHeight="18.0" prefWidth="247.0" text="status" textFill="#949494" />
+   </children>
+</AnchorPane>
