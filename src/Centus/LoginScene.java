@@ -9,11 +9,32 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 
-public class LoginScene {
+import static javafx.application.Application.launch;
+
+public class LoginScene extends Stage {
+
+    // @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("LoginScene.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+
     String userID;
+
 
     @FXML
     Button SignInBtn;
@@ -42,14 +63,16 @@ public class LoginScene {
         primaryStage.show();
 
     }
+
     @FXML
-    public void onBtnClick(ActionEvent e) {
+    public String onBtnClick(ActionEvent e) {
         String p = new String();
         String userName = loginTF.getText();
         String password = passwordPF.getText();
-        if (userName.equals(p) || password.equals(p))
+        if (userName.equals(p) || password.equals(p)) {
             statusLbl.setText("Login or password missing");
-        else {
+            return null;
+        } else {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(
@@ -71,17 +94,24 @@ public class LoginScene {
                         alert.showAndWait();
 
                         Stage stage = (Stage) signUpBtn.getScene().getWindow();
+// to jest polepione w tym miejscu. Uznałem że skoro mam problem z przkazaniem wartości userID do klasy MainScene
+                        //to sobie zrobię plik a w drugiej klasie go odczytam ale toe jest gowno
+                        FileWriter user = new FileWriter("currentUser.txt");
+                        BufferedWriter curUser = new BufferedWriter(user);
+                        curUser.write(userName);
+                        curUser.close();
+
+// w tym miejscu trzeba przesłać dane do MainScene. Status akcji logowania: udane lub nie
+                        // i nazwę użytkownika
+
+
                         stage.close();
 
-                        Stage primaryStage = new Stage();
-                        Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.show();
 
+                    } else {
+                        statusLbl.setText("Acces denied. Login or password is incorrect");
 
-                        break;
-                    } else statusLbl.setText("Acces denied. Login or password is incorrect");
+                    }
                 }
                 connection.close();
             } catch (ClassNotFoundException classNotFoundException) {
@@ -89,12 +119,16 @@ public class LoginScene {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 statusLbl.setText("Failed to connect to databse");
+                return null;
+
+
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-
+            return null;
         }
     }
+
     @FXML
     public void deleteAccountBtn(ActionEvent e) throws IOException {
 
@@ -110,9 +144,5 @@ public class LoginScene {
     public void exitBtn(ActionEvent e) {
         System.exit(0);
     }
-
-    public String getUserID(){
-        return userID;
-    }
-
 }
+
