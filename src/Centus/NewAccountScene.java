@@ -30,13 +30,13 @@ public class NewAccountScene {
         String passValue = passwordL.getText();
         String reppassValue = repeatPasswordL.getText();
 
-        if (loginValue.isBlank() || passValue.isBlank() || reppassValue.isBlank()) {
+        if (loginValue.isBlank() || passValue.isBlank() || reppassValue.isBlank()) { //jesli cos jest puste to finitocontitio
             statusL.setText("Empty space. Cannot add user");
-        } else if (!reppassValue.equals(passValue)) {
+        } else if (!reppassValue.equals(passValue)) { //jesli hasla sa rozne
             statusL.setText("Passwords are not same. Cannot add user");
         } else {
 
-            try {
+            try {//laczenie z baza danych
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/mydb", "admin", "12345678"
@@ -47,7 +47,7 @@ public class NewAccountScene {
                 boolean exist = false;
                 int lastInt = 0;
                 while (rs.next()) {
-                    if (rs.getString(2).equals(loginValue)) {
+                    if (rs.getString(2).equals(loginValue)) { //sprawdzenie czy jest juz taki uzytkownik
                         statusL.setText("This login is in use. Choose another");
                         exist = true;
                         break;
@@ -55,8 +55,8 @@ public class NewAccountScene {
                     }
                     lastInt = rs.getInt(1);
                 }
-                if (!exist) {
-                    lastInt += 1;
+                if (!exist) { //jak nie ma takiego uzytkownika to jazda i dodawanie
+                    lastInt += 1; //ustawienie id na 1 wieksze niz ostatnie
 
                     try {
                         st.executeUpdate("INSERT INTO users VALUES(" + lastInt + ",'"
@@ -89,7 +89,8 @@ public class NewAccountScene {
         }
 
     }
-    public void exitNewAccountWindow(ActionEvent e){
+
+    public void exitNewAccountWindow(ActionEvent e) {
 
         Stage stage = (Stage) exitBtn.getScene().getWindow();
         stage.close();
