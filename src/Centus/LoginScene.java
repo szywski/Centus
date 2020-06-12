@@ -1,5 +1,6 @@
 package Centus;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +35,7 @@ public class LoginScene extends Stage {
 
 
     String userID;
+    Boolean loginSucces = false;
 
 
     @FXML
@@ -54,6 +56,24 @@ public class LoginScene extends Stage {
     AnchorPane loginAnchorPane;
 
 
+
+    public LoginScene(){
+
+    }
+    public  void setMainScene(MainScene ms){
+        //this.ms = ms;
+    }
+
+
+
+    public String getUserID(){
+        return userID;
+    }
+    public void setUserId(String i){
+        this.userID=i;
+
+    }
+
     @FXML
     public void onSignUpBtnClick(ActionEvent e) throws IOException {
         Stage primaryStage = new Stage();
@@ -65,13 +85,13 @@ public class LoginScene extends Stage {
     }
 
     @FXML
-    public String onBtnClick(ActionEvent e) {
+    public void onBtnClick(ActionEvent e) {
         String p = new String();
         String userName = loginTF.getText();
         String password = passwordPF.getText();
         if (userName.equals(p) || password.equals(p)) {
             statusLbl.setText("Login or password missing");
-            return null;
+
         } else {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -95,7 +115,7 @@ public class LoginScene extends Stage {
 
                         Stage stage = (Stage) signUpBtn.getScene().getWindow();
 // to jest polepione w tym miejscu. Uznałem że skoro mam problem z przkazaniem wartości userID do klasy MainScene
-                        //to sobie zrobię plik a w drugiej klasie go odczytam ale toe jest gowno
+                        //to sobie zrobię plik a w drugiej klasie go odczytam ale to jest totalnie fatalne rozwiązanie na potrzeby rozwoju aplikacji
                         FileWriter user = new FileWriter("currentUser.txt");
                         BufferedWriter curUser = new BufferedWriter(user);
                         curUser.write(userName);
@@ -104,8 +124,8 @@ public class LoginScene extends Stage {
 // w tym miejscu trzeba przesłać dane do MainScene. Status akcji logowania: udane lub nie
                         // i nazwę użytkownika
 
-
-                        stage.close();
+                        System.out.println(userID);
+                        stage.hide();
 
 
                     } else {
@@ -119,13 +139,12 @@ public class LoginScene extends Stage {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 statusLbl.setText("Failed to connect to databse");
-                return null;
+
 
 
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            return null;
         }
     }
 
@@ -143,6 +162,7 @@ public class LoginScene extends Stage {
     @FXML
     public void exitBtn(ActionEvent e) {
         System.exit(0);
+
     }
 }
 
