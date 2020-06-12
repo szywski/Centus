@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Button fx:id="loginBtn" layoutX="372.0" layoutY="334.0" mnemonicParsing="false" onAction="#Login" text="Login" />
-      <Button layoutX="217.0" layoutY="322.0" mnemonicParsing="false" text="Button" />
-   </children>
-</Pane>
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <MenuBar fx:id="menuBar" prefHeight="24.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu fx:id="revenuesMenu" mnemonicParsing="false" text="Revenues">
+               <items>
+                  <MenuItem fx:id="addRevenue" mnemonicParsing="false" onAction="#revenuesMenu" text="Add revenue" />
+               </items></Menu>
+          <Menu fx:id="outgoingsMenu" mnemonicParsing="false" text="Outgoings">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Add outgoing " />
+               </items></Menu>
+          <Menu fx:id="statisticsMenu" mnemonicParsing="false" text="Statistics" />
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <Pane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="loginBtn" layoutX="274.0" layoutY="17.0" mnemonicParsing="false" onAction="#Login" text="Login" />
+         </children>
+      </Pane>
+   </bottom>
+   <center>
+      <ImageView fx:id="imegeView" fitHeight="324.0" fitWidth="560.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../Images/startPane.jpg" />
+         </image></ImageView>
+   </center>
+</BorderPane>
