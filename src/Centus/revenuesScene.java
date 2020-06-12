@@ -64,21 +64,26 @@ public class revenuesScene extends Stage implements Initializable {
 
     @FXML
     void addNewRevenue(ActionEvent e) throws ClassNotFoundException, SQLException {
-        Double item =  Double.parseDouble(itemField.getText());
+        String item =  itemField.getText();
         String category = comboBox.getValue();
         String dateString;
-
+        item = item.replace(',','.');
+        System.out.println(item);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = datePicker.getValue();
-        dateString = formatter.format(date);
 
-
-        if(        item.toString().isBlank()
-                || dateString.isBlank()
-                || category.isBlank()) statusLbl.setText("Field missing"); //kiedy nie ma itemu
+        if(datePicker.getValue() == null) dateString = "";
         else {
-            revenuesList.add(category + " " +dateString+ " "+ item.toString()+"\n");
+            LocalDate date = datePicker.getValue();
+            dateString = formatter.format(date);
+        }
+
+        if(        item.isBlank()
+                || dateString.isBlank()
+                || category.isBlank()) {
+            statusLbl.setText("Field missing"); //kiedy jakies pole jest puste albo wszystkie albo dwa
+        }
+        else {
             revenuesList.add(category + " " +dateString+ " "+ item.toString()+"\n");
             listView.setItems(revenuesList);
 
@@ -88,7 +93,8 @@ public class revenuesScene extends Stage implements Initializable {
                     "jdbc:mysql://localhost:3306/mydb", "admin", "12345678"
             );
             Statement statement = connection.createStatement();
-            statement.executeQuery("INSERT INTO revenues VALUES('ddd','egferfd','1995-12-12',12.4)"); //insert testowy
+            //userName jest ustawiony jakis tam bo nie wiem jak go przekazać z loginu to mainScena
+            statement.executeUpdate("INSERT INTO revenues VALUES('ddd','"+category +"','"+dateString+"',"+item+")"); //insert testowy
             connection.close();
 
         }
