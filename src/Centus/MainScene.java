@@ -1,5 +1,6 @@
 package Centus;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,17 +10,32 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import java.io.*;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 
-public class MainScene extends Stage {
+
+public class MainScene extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
+        MainScene mainScene = new MainScene();
+        loader.setController(mainScene);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 
     LoginScene loginScene;
     String userId;
@@ -39,11 +55,19 @@ public class MainScene extends Stage {
     ImageView imageView;
     BorderPane bp;
 
+    public MainScene instance = null;
 
+    public MainScene() {
+      super();
+      synchronized(MainScene.class){
+          if(instance != null)throw new UnsupportedOperationException(
+                  getClass()+"testing");
+          instance = this;
+      }
 
-    public MainScene() throws FileNotFoundException {
         imageView = new ImageView();
         bp = new BorderPane();
+
 
     }
 
@@ -100,6 +124,8 @@ public class MainScene extends Stage {
         File curUs = new File("currentUser.txt");
         curUs.delete();
     }
-
+    public MainScene getInstance(){
+        return instance;
+    }
 
 }
