@@ -10,17 +10,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 
-import static javafx.application.Application.launch;
 
-public class LoginScene extends Stage {
 
-    // @Override
+public class LoginScene extends Application {
+
+    @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("LoginScene.fxml"));
         Scene scene = new Scene(root);
@@ -36,7 +34,7 @@ public class LoginScene extends Stage {
 
     String userID;
     Boolean loginSucces = false;
-
+    public MainScene ms;
 
     @FXML
     Button SignInBtn;
@@ -56,23 +54,10 @@ public class LoginScene extends Stage {
     AnchorPane loginAnchorPane;
 
 
-
     public LoginScene(){
 
     }
-    public  void setMainScene(MainScene ms){
-        //this.ms = ms;
-    }
 
-
-
-    public String getUserID(){
-        return userID;
-    }
-    public void setUserId(String i){
-        this.userID=i;
-
-    }
 
     @FXML
     public void onSignUpBtnClick(ActionEvent e) throws IOException {
@@ -114,22 +99,22 @@ public class LoginScene extends Stage {
                         alert.showAndWait();
 
                         Stage stage = (Stage) signUpBtn.getScene().getWindow();
-// to jest polepione w tym miejscu. Uznałem że skoro mam problem z przkazaniem wartości userID do klasy MainScene
-                        //to sobie zrobię plik a w drugiej klasie go odczytam ale to jest totalnie fatalne rozwiązanie na potrzeby rozwoju aplikacji
-                        FileWriter user = new FileWriter("currentUser.txt");
-                        BufferedWriter curUser = new BufferedWriter(user);
-                        curUser.write(userName);
-                        curUser.close();
+                        loginSucces = true;
 
-// w tym miejscu trzeba przesłać dane do MainScene. Status akcji logowania: udane lub nie
-                        // i nazwę użytkownika
+                        ms = new MainScene(userID,loginSucces);
+                        ms.setUserId(userName);
+                        ms.setStatus(loginSucces);
+                        ms.setUserNameLbl("Welcome "+userName+"!");
+                        ms.userId = userName;
 
-                        System.out.println(userID);
+
+
                         stage.hide();
 
 
                     } else {
                         statusLbl.setText("Acces denied. Login or password is incorrect");
+                        loginSucces = false;
 
                     }
                 }
@@ -142,11 +127,16 @@ public class LoginScene extends Stage {
 
 
 
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
     }
+
+    @FXML
+    private void startMainScene(String userName, boolean status) throws Exception {
+        MainScene mainScene = new MainScene(userName, status);
+           }
 
     @FXML
     public void deleteAccountBtn(ActionEvent e) throws IOException {
