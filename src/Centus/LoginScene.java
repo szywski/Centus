@@ -109,7 +109,7 @@ public class LoginScene extends Application {
 
 
 
-                        stage.hide();
+                        stage.close();
 
 
                     } else {
