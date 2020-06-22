@@ -159,6 +159,14 @@ public class revenuesScene extends Stage implements Initializable {
 
 
     }
+    @FXML
+    public void exit(ActionEvent e){
+        Stage stage = (Stage) exitBtn.getScene().getWindow();
+        stage.close();
+
+
+    }
+
     public void setUserId(String userId){
         this.userId = userId;
     }
