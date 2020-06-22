@@ -29,7 +29,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="resetBtn" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" text="Reset" />
+            <Button fx:id="resetBtn" layoutX="15.0" layoutY="252.0" mnemonicParsing="false" onAction="#reset" text="Reset" />
             <Button fx:id="addBtn" layoutX="166.0" layoutY="252.0" mnemonicParsing="false" onAction="#addNewRevenue" text="Add" />
             <Label fx:id="statusLbl" layoutX="11.0" layoutY="199.0" prefHeight="18.0" prefWidth="191.0" textFill="#646464">
                <font>

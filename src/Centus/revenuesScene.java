@@ -163,7 +163,14 @@ public class revenuesScene extends Stage implements Initializable {
     public void exit(ActionEvent e){
         Stage stage = (Stage) exitBtn.getScene().getWindow();
         stage.close();
+    }
 
+    @FXML
+    public void reset(ActionEvent e){
+        datePicker.getEditor().clear();
+        itemField.clear();
+        comboBox.getEditor().clear();
+        statusLbl.setText("Fields cleared");
 
     }
 
