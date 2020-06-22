@@ -1,45 +1,37 @@
 package Centus;
 
-import javafx.application.Application;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import java.io.*;
 
 
 
-public class MainScene extends Application {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+public class MainScene extends Stage {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
-        MainScene mainScene = new MainScene();
-        loader.setController(mainScene);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
+    public String userId;
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public String getUserId() {
+        return userId;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
 
-    LoginScene loginScene;
-    String userId;
-   public MainScene mainScene;
+    @FXML
+    private boolean status;
+
     @FXML
     Button showIdBtn;
     @FXML
@@ -50,24 +42,32 @@ public class MainScene extends Application {
     Menu revenuesMenu, outgoingsMenu, statisticsMenu;
     @FXML
     MenuItem addRevenue;
-
-
-    ImageView imageView;
-    BorderPane bp;
+    @FXML
+   private Label userNameLbl;
 
     public MainScene instance = null;
 
-    public MainScene() {
-      super();
-      synchronized(MainScene.class){
-          if(instance != null)throw new UnsupportedOperationException(
-                  getClass()+"testing");
-          instance = this;
-      }
+    public MainScene(){}
 
-        imageView = new ImageView();
-        bp = new BorderPane();
+    public MainScene( String userId, boolean status) throws Exception {
+        if(instance == null) instance = this;
 
+
+        setUserId(userId);
+        setStatus(status);
+        Label userNameLbl = new Label();
+        userNameLbl.setText(this.getUserId());
+
+
+        this.userId = this.getUserId();
+        Stage stage = new Stage();
+        stage.setTitle("Centus");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
+         loader.setController(this);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -76,9 +76,9 @@ public class MainScene extends Application {
 
     @FXML
     public void revenuesMenu(ActionEvent e) throws Exception {
-       revenuesScene revenuesScene = new revenuesScene();
-       Stage stage = new Stage();
-       revenuesScene.start(stage);
+       revenuesScene revenuesScene = new revenuesScene(userId);
+       revenuesScene.setUserId(userId);
+
     }
 
     @FXML
@@ -90,42 +90,47 @@ public class MainScene extends Application {
     public void statisticsMenu() {
 
     }
-
-        @FXML
-    public void showId(ActionEvent e){
-        userId = loginScene.userID;
-        showIdBtn.setText(userId);
-        System.out.println(userId);
-
-    }
     @FXML
-    public void Login(ActionEvent e) throws Exception {
-        loginScene = new LoginScene();
-        setLogin(loginScene);
-        Stage stage = new Stage();
-        loginScene.start(stage);
+    public void logOut(ActionEvent e) throws Exception {
+
+//        loginScene = new LoginScene(this.getInstance());
+//        setLogin(loginScene);
+//        Stage stage = new Stage();
+//        loginScene.start(stage);
+
+
+
     }
     public void setLogin(LoginScene ls){
 
-        this.loginScene = ls;
-        loginScene.setMainScene(this);
-    }
+//        this.loginScene = ls;
+//        loginScene.setMainScene(this);
+   }
 
     public void setId(String s) {
         this.userId = s;
 
 
     }
-
-    public void setUserId() throws IOException {
-        BufferedReader name = new BufferedReader(new FileReader(new File("currentUser.txt")));
-        userId = name.readLine();
-        name.close();
-        File curUs = new File("currentUser.txt");
-        curUs.delete();
+    public void printUserid(ActionEvent e){
+        System.out.println(userId);
     }
+
+
     public MainScene getInstance(){
         return instance;
+    }
+
+    public void setUserNameLbl(String s){
+        this.userNameLbl.setText(s);
+    }
+    public void setLoginBtn(boolean status){
+        if(status == true)
+       this.loginBtn.setText("Logout");
+        else this.loginBtn.setText("Login");
+    }
+    public void setStatus(boolean s){
+        this.status = s;
     }
 
 }
