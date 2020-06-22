@@ -76,28 +76,43 @@ public class MainScene extends Stage {
 
     @FXML
     public void revenuesMenu(ActionEvent e) throws Exception {
-       revenuesScene revenuesScene = new revenuesScene(userId);
-       revenuesScene.setUserId(userId);
-
+        if(status != false) {
+            revenuesScene revenuesScene = new revenuesScene(userId);
+            revenuesScene.setUserId(userId);
+        }else
+            {Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText("You have to be logged in!");
+        alert.showAndWait();
+        }
     }
 
     @FXML
     public void outgoingsMenu() {
+        if(status != false) {
 
-
+            outgoingsScene outgoingsScene = new outgoingsScene();
+            outgoingsScene.setUserId(userId);
+        }else
+        {Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText(null);
+            alert.setContentText("You have to be logged in!");
+            alert.showAndWait();
+        }
     }
+
+
     @FXML
     public void statisticsMenu() {
 
     }
     @FXML
     public void logOut(ActionEvent e) throws Exception {
-
-//        loginScene = new LoginScene(this.getInstance());
-//        setLogin(loginScene);
-//        Stage stage = new Stage();
-//        loginScene.start(stage);
-
+        userId = null;
+        status = false;
+        userNameLbl.setText("Bye!");
 
 
     }
