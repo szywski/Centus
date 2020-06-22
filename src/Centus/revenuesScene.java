@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,24 +19,41 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static javafx.application.Application.launch;
 
 public class revenuesScene extends Stage implements Initializable {
 
-    // @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("revenuesScene.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    static class arrObject{
+        int indx;
+        String category;
+        String data;
+        String rev;
+        public arrObject(int indx, String category, String data, String rev){
+            this.category = category;
+            this.data = data;
+            this.indx = indx;
+            this.rev = rev;
+        }
+
+        public int getIndx(){
+            return indx;
+        }
+
+        @Override
+        public String toString() {
+            return indx + " "+category + " "+data+ " "+ rev ;
+        }
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    @FXML
+    String userId;
+    @FXML
+    boolean status;
 
     @FXML
     Button resetBtn, addBtn, deletebtn, exitBtn;
@@ -44,8 +62,9 @@ public class revenuesScene extends Stage implements Initializable {
     @FXML
     TextField itemField;
     @FXML
-    ListView listView;
+    ListView<String> listView;
     ObservableList<String> revenuesList = FXCollections.observableArrayList();
+    List<arrObject> arrObjList = new ArrayList<arrObject>();
     @FXML
     ComboBox<String> comboBox;
     ObservableList<String> categoryList = FXCollections.observableArrayList(
@@ -53,8 +72,23 @@ public class revenuesScene extends Stage implements Initializable {
 
     @FXML
     Label statusLbl;
+    int i;
 
     public revenuesScene(){}
+    public revenuesScene(String userId) throws IOException {
+        this.userId = userId;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("revenuesScene.fxml"));
+        loader.setController(this);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        i = 0;
+        stage.setTitle("Revenues");
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,11 +98,12 @@ public class revenuesScene extends Stage implements Initializable {
 
     @FXML
     void addNewRevenue(ActionEvent e) throws ClassNotFoundException, SQLException {
+        System.out.println(userId);
         String item =  itemField.getText();
         String category = comboBox.getValue();
         String dateString;
         item = item.replace(',','.');
-        System.out.println(item);
+
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -84,21 +119,48 @@ public class revenuesScene extends Stage implements Initializable {
             statusLbl.setText("Field missing"); //kiedy jakies pole jest puste albo wszystkie albo dwa
         }
         else {
-            revenuesList.add(category + " " +dateString+ " "+ item.toString()+"\n");
-            listView.setItems(revenuesList);
-
-
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/mydb", "admin", "12345678"
             );
             Statement statement = connection.createStatement();
-            //userName jest ustawiony jakis tam bo nie wiem jak go przekazać z loginu to mainScena
-            statement.executeUpdate("INSERT INTO revenues VALUES('ddd','"+category +"','"+dateString+"',"+item+")"); //insert testowy
+            var id = statement.executeQuery("SELECT MAX(id) FROM revenues");
+            id.next();
+            int p = id.getInt(1)+1;
+            arrObject arr = new arrObject(p,category,dateString,item);
+
+            arrObjList.add(arr);
+            revenuesList.add(arr.toString());
+
+            listView.setItems(revenuesList);
+
+
+            statement.executeUpdate("INSERT INTO revenues VALUES("+p+",'"+userId+"','"+category +"','"+dateString+"',"+item+")"); //insert testowy
             connection.close();
 
         }
 
+    }
+    @FXML
+    public void deleteFromListView(ActionEvent e) throws ClassNotFoundException, SQLException {
+        int indx =  listView.getSelectionModel().getSelectedIndex();
+        System.out.println(revenuesList);
+        revenuesList.remove(indx);
+        System.out.println(revenuesList);
+        listView.setItems(revenuesList);
+        int indexInDb = arrObjList.get(indx).getIndx();
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/mydb", "admin", "12345678"
+        );
+        Statement stmnt = connection.createStatement();
+        stmnt.executeUpdate("DELETE FROM revenues WHERE id="+indexInDb+"");
+        connection.close();
+
+
+    }
+    public void setUserId(String userId){
+        this.userId = userId;
     }
 
 
