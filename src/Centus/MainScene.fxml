@@ -39,7 +39,7 @@
    <center>
       <ImageView fx:id="imegeView" fitHeight="324.0" fitWidth="560.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../Images/startPane.jpg" />
+            <Image url="@../Images/startPane.jpeg" />
          </image></ImageView>
    </center>
 </BorderPane>
