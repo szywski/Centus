@@ -12,6 +12,6 @@
       <Button fx:id="exitBtn" layoutX="335.0" layoutY="224.0" mnemonicParsing="false" onAction="#exitBtn" text="Exit" />
       <TextField fx:id="loginTF" layoutX="125.0" layoutY="44.0" onAction="#onBtnClick" prefHeight="26.0" prefWidth="149.0" promptText="Login" />
       <PasswordField fx:id="passwordPF" layoutX="125.0" layoutY="97.0" onAction="#onBtnClick" promptText="Password" />
-      <Label fx:id="statusLbl" layoutX="78.0" layoutY="140.0" prefHeight="18.0" prefWidth="247.0" text="status" textFill="#949494" />
+      <Label fx:id="statusLbl" layoutX="78.0" layoutY="140.0" prefHeight="18.0" prefWidth="247.0" textFill="#949494" />
    </children>
 </AnchorPane>
