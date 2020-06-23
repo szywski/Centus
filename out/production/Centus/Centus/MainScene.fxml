@@ -15,9 +15,12 @@
                </items></Menu>
           <Menu fx:id="outgoingsMenu" mnemonicParsing="false" text="Outgoings">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Add outgoing " />
+                  <MenuItem fx:id="addOutgoing" mnemonicParsing="false" onAction="#outM" text="Add outgoing " />
                </items></Menu>
-          <Menu fx:id="statisticsMenu" mnemonicParsing="false" text="Statistics" />
+          <Menu fx:id="statisticsMenu" mnemonicParsing="false" text="Statistics">
+               <items>
+                  <MenuItem fx:id="statisticsItem" mnemonicParsing="false" onAction="#statisticsMenu" text="Show statistics" />
+               </items></Menu>
         </menus>
       </MenuBar>
    </top>
