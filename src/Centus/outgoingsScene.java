@@ -97,7 +97,7 @@ public class outgoingsScene extends Stage implements Initializable {
     }
 
     @FXML
-    void addNewRevenue(ActionEvent e) throws ClassNotFoundException, SQLException {
+    void addNewOutgoing(ActionEvent e) throws ClassNotFoundException, SQLException {
         System.out.println(userId);
         String item =  itemField.getText();
         String category = comboBox.getValue();
