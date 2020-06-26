@@ -9,8 +9,9 @@ This program will provide statistics of your money management. This is my projec
 * Added functionality to Stages, Buttons etc...
 * Program allows to add, delete users and login into app(almost).
 * Revenues stage can add item to database, and list.
+* Stage to visualize data with help of graphs or chart.
+* Stage to save item in database --> ITEM(PRODUCT?, CATEGORY,DATA PRICE )
 
 ### TO DO
 * ADD Stage to save item in database --> ITEM(PRODUCT?, CATEGORY,DATA PRICE )
-* ADD Stage to see basic weeakly, monthly,daily statistics
-* ADD Stage to visualize data with help of graphs or chart.
+
