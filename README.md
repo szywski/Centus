@@ -13,5 +13,5 @@ This program will provide statistics of your money management. This is my projec
 * Stage to save item in database --> ITEM(PRODUCT?, CATEGORY,DATA PRICE )
 
 ### TO DO
-* ADD Stage to save item in database --> ITEM(PRODUCT?, CATEGORY,DATA PRICE )
+
 
