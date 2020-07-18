@@ -1,6 +1,6 @@
 # Centus
 
-This program will provide statistics of your money management. This is my project for classes. 
+This program will provide statistics of your money management. This is my project for classes. Database works on MySQL server.
 
 ### CURENT STATUS
 * Created GUI with JavaFX
